@@ -1,0 +1,66 @@
+@model IEnumerable<Product>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="text-center">
+        <div class="display-6 mt-2">Products</div>
+        <div class="d-flex justify-content-end my-3">
+            <a class="btn btn-outline-success" asp-action="Create">
+                <i class="fa fa-plus"></i>
+                Create</a>
+        </div>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>ImageUrl</th>
+                    <th>Product Name</th>
+                    @* <th>Summary</th> *@
+                    <th>Price</th>
+                    <th>Operations</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Product prd in Model)
+                {
+                    <tr>
+                        <td>@prd.ProductId</td>
+                        <td><img class="border border-dark" src="@prd?.ImageUrl" alt="@prd.ProductName" width="50"/></td>
+                        <td>@prd.ProductName</td>
+                        @* <td>@(string.Join(" ", prd.Summary?.Split(' ').Take(5)) + "…")</td> *@
+                        <td>@prd.Price.ToString("c")</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-warning text-white" asp-action="Update"
+                                    asp-route-id="@prd.ProductId">
+                                    <i class="fa fa-edit"></i>
+                                    Edit</a>
+                                <a class="btn btn-danger text-white" asp-action="Delete" asp-route-id="@prd.ProductId">
+                                    <i class="fa fa-trash"></i>
+                                    Delete</a>
+
+                                <a class="btn btn-info text-white" asp-area="" asp-controller="Product" asp-action="Get" asp-route-id="@prd.ProductId">
+                                    <i class="fa fa-search"></i>
+                                    Web</a>    
+
+                            </div>
+                            </td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+
+
+    </div>
+</body>
+
+</html>
